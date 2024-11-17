@@ -6,8 +6,6 @@ import {
     Typography,
     Input
   } from "@mui/material";
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 
 function UploadPage() {
   const navigate = useNavigate();
@@ -36,60 +34,64 @@ function UploadPage() {
     setSelectedImage(null);
   }
   return (
-    <>
-    <Header/>
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        // height: '100vh',
-        height: 'calc(100vh - 80px)', 
-        textAlign: 'center',
+        minHeight: '100vh', // 全体の高さをカバー
+        backgroundColor: '#dcf9fc', // 薄い水色
+        pt:3
       }}
     >
-      <Typography variant="h4" component="h1" sx={{mb:5}}>
-        写真をアップロード<br/>してください
-      </Typography>
-
-      {!selectedImage ? (
-        <Button
-            variant="outlined"
-            component="label"
+        <Box
             sx={{
-            padding: '10px 20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
             }}
         >
-            ファイルを選択
-            <Input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                sx={{ display: 'none' }} // ボタンがクリックされたときにのみ表示される
-            />
-        </Button>
-      ) : (
-        <Box sx={{ textAlign: 'center' }}>
-          <img
-            src={selectedImage}
-            alt="Uploaded Preview"
-            style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '16px' }}
-          />
-          <Typography variant="h6">これでいいですか？</Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', marginTop: 2 }}>
-            <Button variant="outlined" color="primary" onClick={handleConfirm}>
-              OK
-            </Button>
-            <Button variant="outlined" color="error" onClick={handleRetry}>
-              No
-            </Button>
-          </Box>
+            <Typography variant="h4" component="h1" sx={{mb:5}}>
+                写真をアップロード<br/>してください
+            </Typography>
+
+            {!selectedImage ? (
+                <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{
+                    padding: '10px 20px',
+                    }}
+                >
+                    ファイルを選択
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        sx={{ display: 'none' }} // ボタンがクリックされたときにのみ表示される
+                    />
+                </Button>
+            ) : (
+                <Box sx={{ textAlign: 'center' }}>
+                    <img
+                        src={selectedImage}
+                        alt="Uploaded Preview"
+                        style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '16px' }}
+                    />
+                    <Typography variant="h6">これでいいですか？</Typography>
+                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', marginTop: 2 }}>
+                        <Button variant="outlined" color="primary" onClick={handleConfirm}>
+                        OK
+                        </Button>
+                        <Button variant="outlined" color="error" onClick={handleRetry}>
+                        No
+                        </Button>
+                    </Box>
+                </Box>
+            )}
         </Box>
-      )}
     </Box>
-      <Footer/>
-    </>
   );
 }
 

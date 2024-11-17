@@ -22,13 +22,13 @@ function LandingPage() {
             alignItems: 'center',
             height: '100vh', // 画面全体の高さをカバー
             textAlign: 'center', // テキストを中央揃え
-            backgroundColor: '#F5FCFF', // 薄い水色
+            backgroundColor: '#dcf9fc', // 薄い水色
         }}
     >
         <Typography  
             variant="h1" 
             component="h1" 
-            sx={{ fontSize: '60px', color: 'Black', fontWeight: 'bold' }}
+            sx={{ fontSize: '3rem', color: 'Black', fontWeight: 'bold' }}
         >
             Let’s Cooking
         </Typography>
