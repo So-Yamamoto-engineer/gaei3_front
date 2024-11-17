@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {
     Button,
     Box,
     Typography,
-    Input
+    Input,
   } from "@mui/material";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function UploadPage() {
   const navigate = useNavigate();
