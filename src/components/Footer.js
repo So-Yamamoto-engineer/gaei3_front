@@ -1,27 +1,45 @@
 // src/components/Footer.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom';  // navigateを使ってトップに戻るためにインポート
-import { Link } from 'react-router-dom'; // React Router を使って遷移
+import { Button, Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
-  const navigate = useNavigate();
 
-  const handleBackToTop = () => {
-    navigate('/');  // トップページ（ホーム）に戻る
-  };
+    const navigate = useNavigate();
+
+    const handleNavigateToLandingPage = () => {
+    navigate('/'); // ランディングページへ遷移
+    };
+
 
   return (
-    <footer className="header">
-        <h1>AIレシピ提案システム</h1>
-      <nav className="nav">
-        <ul>
-          <li>
-            <Link to="/">Let's Cooking</Link> {/* クリックするとトップページに遷移 */}
-          </li>
-        </ul>
-      </nav>
-    </footer>
+    <Box
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#f4f4f4',
+        padding: 2,
+        textAlign: 'center',
+        boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      <Typography variant="body2" sx={{ marginBottom: 1 }}>
+        © 2024 Let’s Cooking. All rights reserved.
+      </Typography>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleNavigateToLandingPage}
+      >
+        LPに戻る
+      </Button>
+    </Box>
   );
-};
+}
+
+
+
 
 export default Footer;

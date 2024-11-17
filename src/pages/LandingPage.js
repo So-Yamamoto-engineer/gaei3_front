@@ -5,7 +5,6 @@ import {
     Box,
     Typography
   } from "@mui/material";
-import '../styles/LandingPage.css';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ function LandingPage() {
                     borderWidth: '2px', // 枠線を太く
                 }}
             >
-                写真をアップロードする
+                料理を作る
             </Button>
         </Box>
     </Box>

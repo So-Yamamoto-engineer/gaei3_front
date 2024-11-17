@@ -1,56 +1,91 @@
-// src/pages/UploadPage.js
-import React, { useState } from 'react';
-import PhotoCard from '../components/PhotoCard';  // 作成したカードコンポーネントをインポート
-import '../styles/UploadPage.css';  // スタイルのインポート
-import Header from '../components/Header';
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+    Button,
+    Box,
+    Typography,
+    Input
+  } from "@mui/material";
 import Footer from '../components/Footer';
 
-const UploadPage = () => {
-  const [image, setImage] = useState(null); // アップロードされた画像の状態
-  const [isConfirmed, setIsConfirmed] = useState(false); // 確認ボタンの状態
+function UploadPage() {
+  const navigate = useNavigate();
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleNavigateToUpload = () => {
+    navigate('/upload');
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);  // base64形式で画像を状態にセット
-      };
-      reader.readAsDataURL(file);  // ファイルをbase64に変換して読み込む
+        const imageUrl = URL.createObjectURL(file);
+        setSelectedImage(imageUrl);
+        setIsConfirmed(false);
     }
-  };
-
+  }
+  
   const handleConfirm = () => {
-    setIsConfirmed(true); // 確認したので状態を更新
-  };
+    setIsConfirmed(true);
+  }
 
-  const handleCancel = () => {
-    setImage(null);  // 変更するため、画像をリセット
-  };
-
+  const handleRetry = () => {
+    setSelectedImage(null);
+  }
   return (
-    <div className="upload-page">
-      <Header/>
-      <h2>写真をアップロード</h2>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="file-input"
-      />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        textAlign: 'center',
+      }}
+    >
+      <Typography variant="h4" component="h1" sx={{mb:5}}>
+        写真をアップロード<br/>してください
+      </Typography>
 
-      {image && !isConfirmed && (
-        <PhotoCard
-          image={image}  // base64形式の画像データを渡す
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-        />
+      {!selectedImage ? (
+        <Button
+            variant="outlined"
+            component="label"
+            sx={{
+            padding: '10px 20px',
+            }}
+        >
+            ファイルを選択
+            <Input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                sx={{ display: 'none' }} // ボタンがクリックされたときにのみ表示される
+            />
+        </Button>
+      ) : (
+        <Box sx={{ textAlign: 'center' }}>
+          <img
+            src={selectedImage}
+            alt="Uploaded Preview"
+            style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '16px' }}
+          />
+          <Typography variant="h6">これでいいですか？</Typography>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', marginTop: 2 }}>
+            <Button variant="outlined" color="primary" onClick={handleConfirm}>
+              OK
+            </Button>
+            <Button variant="outlined" color="error" onClick={handleRetry}>
+              No
+            </Button>
+          </Box>
+        </Box>
       )}
-
-      {isConfirmed && <p>写真が確認されました！</p>}
       <Footer/>
-    </div>
+    </Box>
   );
-};
+}
 
 export default UploadPage;
