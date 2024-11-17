@@ -7,6 +7,7 @@ import {
     Input
   } from "@mui/material";
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function UploadPage() {
   const navigate = useNavigate();
@@ -35,13 +36,16 @@ function UploadPage() {
     setSelectedImage(null);
   }
   return (
+    <>
+    <Header/>
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        // height: '100vh',
+        height: 'calc(100vh - 80px)', 
         textAlign: 'center',
       }}
     >
@@ -83,8 +87,9 @@ function UploadPage() {
           </Box>
         </Box>
       )}
-      <Footer/>
     </Box>
+      <Footer/>
+    </>
   );
 }
 

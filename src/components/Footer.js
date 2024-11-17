@@ -25,16 +25,17 @@ const Footer = () => {
         boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)',
       }}
     >
-      <Typography variant="body2" sx={{ marginBottom: 1 }}>
-        © 2024 Let’s Cooking. All rights reserved.
-      </Typography>
       <Button
         variant="outlined"
         color="primary"
         onClick={handleNavigateToLandingPage}
+        sx={{mb:1.7}}
       >
-        LPに戻る
+        トップに戻る
       </Button>
+      <Typography variant="body2" sx={{ marginBottom: 1 }}>
+        2024 画像映像コンテンツ3 【Let’s Cooking】
+      </Typography>
     </Box>
   );
 }

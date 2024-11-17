@@ -1,22 +1,17 @@
+// Header.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // React Router を使って遷移
-import '../styles/Header.css'
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
-const Header = () => {
+function Header() {
   return (
-    <header className="header">
-      <div className="logo">
-        <h1>AIレシピ提案システム</h1>
-      </div>
-      <nav className="nav">
-        <ul>
-          <li>
-            <Link to="/">Let's Cooking</Link> {/* クリックするとトップページに遷移 */}
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <AppBar position="sticky" sx={{backgroundColor: '#ade9ff', height: '80px'  }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+        <Typography variant="h6" sx={{fontSize: '35px', fontWeight: 'bold' }}>
+            Let's Cooking
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
-};
+}
 
 export default Header;
