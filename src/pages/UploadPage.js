@@ -6,6 +6,7 @@ import {
     Typography,
     Input
   } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function UploadPage() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function UploadPage() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh', // 全体の高さをカバー
-        backgroundColor: '#dcf9fc', // 薄い水色
+        backgroundColor: '#e3f7fa', // 薄い水色
         pt:3
       }}
     >
@@ -60,6 +61,7 @@ function UploadPage() {
                 <Button
                     variant="outlined"
                     component="label"
+                    startIcon={<CloudUploadIcon />}
                     sx={{
                     padding: '10px 20px',
                     }}

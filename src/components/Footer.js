@@ -29,12 +29,12 @@ const Footer = () => {
         variant="outlined"
         color="primary"
         onClick={handleNavigateToLandingPage}
-        sx={{mb:1.7}}
+        sx={{mb:1.2}}
       >
         トップに戻る
       </Button>
-      <Typography variant="body2" sx={{ marginBottom: 1 }}>
-        2024 画像映像コンテンツ3 【Let’s Cooking】
+      <Typography variant="body2">
+        2024 画像映像コンテンツ3
       </Typography>
     </Box>
   );
