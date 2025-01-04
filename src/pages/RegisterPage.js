@@ -1,37 +1,38 @@
-import {React, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-    Button,
-    Box,
-    Typography,
-    TextField,
+// src/components/Register.js
+
+import React, { useState } from 'react';
+import { 
+    TextField, Button, Typography, Box,
     Link,
     Stack
-  } from "@mui/material";
+} from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext'
 
-function LandingPage() {
-  const navigate = useNavigate();
-  const {login} = useUser();
+    
 
-  const handleNavigateToUpload = () => {
-    navigate('/upload');
-  };
+const RegisterPage = () => {
+    const navigate = useNavigate();
+    const handleNavigateToUpload = () => {
+        navigate('/upload');
+    };
+    const {login} = useUser();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  
-  const handleLogin = async () => {
+
+  const handleRegister = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/login', {
+      const response = await axios.post('http://127.0.0.1:5000/register', {
         username,
         password,
       });
+    //   console.log(response)
     //   setMessage(response.data.message);
-      handleNavigateToUpload();
-      login(username)
+    handleNavigateToUpload();
+    login(username)
     } catch (error) {
       setMessage(error.response.data.message);
     }
@@ -59,13 +60,15 @@ function LandingPage() {
         <Box sx={{
             width: '80%'
         }}>
+            <Typography variant="h4" gutterBottom>
+                新規登録
+            </Typography>
             <TextField
                 label="Username"
                 fullWidth
                 margin="normal"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder='ユーザー名'
             />
             <TextField
                 label="Password"
@@ -74,25 +77,16 @@ function LandingPage() {
                 margin="normal"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder='パスワード'
             />
-            <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
-                ログイン
+            <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
+                Register
             </Button>
-            <Typography variant="body2" color="error" align="center" sx={{ m: 1.7 }}>
+            <Typography variant="body2" color="error" align="center">
                 {message}
             </Typography>
-            <Stack my={2} direction="row" justifyContent="end" spacing={1}>
-                <Typography variant="body2">
-                    まだ登録されてない方は
-                    <Link href="/register" underline="hover">
-                        こちら
-                    </Link>
-                </Typography>
-            </Stack>
         </Box>
     </Box>
   );
-}
+};
 
-export default LandingPage;
+export default RegisterPage;

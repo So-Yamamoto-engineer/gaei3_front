@@ -2,40 +2,47 @@
 import React from 'react';
 import { Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Footer = () => {
 
     const navigate = useNavigate();
 
     const handleNavigateToLandingPage = () => {
-    navigate('/'); // ランディングページへ遷移
+      navigate('/');
+    };
+
+    const handleNavigateToUploadPage = () => {
+      navigate('/upload');
+    };
+
+    const handleNavigateToHistoryPage = () => {
+      navigate('/history');
     };
 
 
   return (
     <Box
       sx={{
-        position: 'sticky',
+        position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
-        padding: 2,
-        textAlign: 'center',
-        backgroundColor: '#ade9ff',
+        padding: 1.3,
+        backgroundColor: '#edf5ff',
+        
+        display: "flex",
+        justifyContent: "space-evenly",
+        alignItems: "center", 
+        
         boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)',
       }}
     >
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleNavigateToLandingPage}
-        sx={{mb:1.2}}
-      >
-        トップに戻る
-      </Button>
-      <Typography variant="body2">
-        2024 画像映像コンテンツ3
-      </Typography>
+      <RestaurantIcon onClick={handleNavigateToUploadPage} sx={{ fontSize: 40 }}/>
+      <ImportContactsIcon onClick={handleNavigateToHistoryPage}sx={{ fontSize: 40 }}/>
+      <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/>
     </Box>
   );
 }
