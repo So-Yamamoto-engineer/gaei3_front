@@ -98,14 +98,17 @@ function UploadPage() {
     >
         <Box
             sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
             }}
         >
-            <Typography variant="h4" component="h1" sx={{mb:5}}>
+            <Typography variant="h5" component="h1" sx={{
+              mb:5,
+              fontWeight: 'bold',
+            }}>
                 写真をアップロード<br/>してください
             </Typography>
 
@@ -143,13 +146,15 @@ function UploadPage() {
                       }}
                       >
                         <Box>
-                          <Typography variant="h6">これでいいですか？</Typography>
-                          <Button variant="outlined" color="primary" onClick={handleConfirm}>
-                            OK
-                          </Button>
-                          <Button variant="outlined" color="error" onClick={handleRetry}>
-                            No
-                          </Button>
+                          <Typography variant="h6">この写真でレシピを生成しますか</Typography>
+                          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+                            <Button variant="outlined" color="primary" onClick={handleConfirm} >
+                              OK
+                            </Button>
+                            <Button variant="outlined" color="error" onClick={handleRetry}>
+                              No
+                            </Button>
+                          </Box>
                         </Box>
                       </Box>
                     )}
