@@ -71,8 +71,9 @@ const HistoryPage = () => {
 
   return (
     <Box sx={{ mt: 8, textAlign: "center" }}>
+      {console.log(recipes)}
       <Typography variant="h4" gutterBottom>
-        あなたの過去のレシピ
+        過去のレシピ
       </Typography>
       <Box
         display="flex"
@@ -92,9 +93,9 @@ const HistoryPage = () => {
           >
             <CardContent>
               <Typography variant="h6">{recipe.name}</Typography>
-              <Typography variant="body2" color="text.secondary">
-                {recipe.description}
-              </Typography>
+              {/* <Typography variant="body2" color="text.secondary">
+                {recipe.name}
+              </Typography> */}
             </CardContent>
           </Card>
         ))}
