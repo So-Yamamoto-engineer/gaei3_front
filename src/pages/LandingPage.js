@@ -33,7 +33,11 @@ function LandingPage() {
       handleNavigateToUpload();
       login(username)
     } catch (error) {
-      setMessage(error.response.data.message);
+      const message =
+      error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : "ログイン中にエラーが発生しました。";
+      setMessage(message); // エラーメッセージを表示
     }
   };
 

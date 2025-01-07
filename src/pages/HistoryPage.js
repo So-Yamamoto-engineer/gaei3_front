@@ -1,129 +1,106 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { 
-  Box, 
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
+import React, { useState, useEffect } from "react";
+import {
+  Box,
   Typography,
- } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import LanguageIcon from '@mui/icons-material/Language';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import LockIcon from '@mui/icons-material/Lock';
-import EmailIcon from '@mui/icons-material/Email';
-import EditIcon from '@mui/icons-material/Edit';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { useNavigate } from 'react-router-dom';
+  CircularProgress,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { useUser } from "../context/UserContext"; // UserContextをインポート
 
+const HistoryPage = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { username } = useUser(); // Contextからuser_idを取得
 
-function HistoryPage() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [loading, setLoading] = useState(true);
-    const [mealsInfo, setMealsInfo] = useState([]);
-    const [error, setError] = useState(null);
-    const handleNavigateToPastMeals = (meal) => {
-        navigate('/pastMeals');
-    };
-    const handleNavigateToPopularMeals = (meal) => {
-      navigate('/popularMeals');
-    };
-    const handleNavigateToBalance = (meal) => {
-      navigate('/balance');
-    };
+  useEffect(() => {
+    if (!username) {
+      console.warn("ユーザーがログインしていません");
+      setLoading(false);
+      return;
+    }
 
+    // 特定ユーザーのレシピを取得
+    fetch(`http://localhost:5000/api/users/${username}/recipes`) // usernameをAPIエンドポイントに使用
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch recipes");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setRecipes(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user recipes:", error);
+        setLoading(false);
+      });
+  }, [username]);
+
+  if (loading) {
     return (
       <Box
         sx={{
-            mt: 7,
-            mb: 40,
+          mt: 6,
+          textAlign: "center",
         }}
       >
-        <List>
-          {/* 料理設定系 */}
-          <ListItem button onClick={handleNavigateToPastMeals} sx={{ borderBottom: '1px solid #e0e0e0' }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="過去の料理を見る" />
-          </ListItem>
-          <ListItem button onClick={handleNavigateToPopularMeals} sx={{ borderBottom: '1px solid #e0e0e0' }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="人気のレシピを見る" />
-          </ListItem>
-          <ListItem button onClick={handleNavigateToBalance} sx={{ mb: 3 }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="バランス" />
-          </ListItem>
-
-          {/* 個人設定系 */}
-          <Typography sx={{ml: 2}}>
-                個人設定
-          </Typography>
-          <ListItem >
-          {/* <ListItem button onClick={handleNavigateToSettingsIcon}> */}
-            <ListItemIcon>
-              <SettingsIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="環境設定" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToChangeName}> */}
-          <ListItem>
-            <ListItemIcon>
-              <EditIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="名称変更" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToChangeEmail}> */}
-          <ListItem>
-            <ListItemIcon>
-              <EmailIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="メールアドレス変更" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToChangePassword}> */}
-          <ListItem>
-            <ListItemIcon>
-              <LockIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="パスワード変更" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToNotificationSettingsIcon}> */}
-          <ListItem>
-            <ListItemIcon>
-              <NotificationsIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="通知設定" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToLanguageSettingsIcon}> */}
-          <ListItem>
-            <ListItemIcon>
-              <LanguageIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="言語設定" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToDeleteAccount}> */}
-          <ListItem>
-            <ListItemIcon>
-              <DeleteIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="アカウント削除" />
-          </ListItem>
-          {/* <ListItem button onClick={handleNavigateToPrivacyPolicy}> */}
-          <ListItem>
-            <ListItemText primary="プライバシーポリシー・利用規約" />
-          </ListItem>
-        </List>
-
+        <CircularProgress />
+        <Typography variant="h6" style={{ marginTop: "1rem" }}>
+          Loading...
+        </Typography>
       </Box>
     );
-}
+  }
+
+  if (!recipes.length) {
+    return (
+      <Box
+        sx={{
+          mt: 8,
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h5" color="text.secondary">
+          レシピが見つかりませんでした
+        </Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ mt: 8, textAlign: "center" }}>
+      <Typography variant="h4" gutterBottom>
+        あなたの過去のレシピ
+      </Typography>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="space-around"
+        gap={2}
+        mt={3}
+      >
+        {recipes.map((recipe) => (
+          <Card
+            key={recipe.id}
+            sx={{
+              width: "300px",
+              boxShadow: 3,
+              borderRadius: "8px",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">{recipe.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {recipe.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
 export default HistoryPage;

@@ -5,6 +5,7 @@ import UploadPage from './pages/UploadPage';
 import ResipePage from './pages/ResipePage';
 import MealPage from './pages/MealPage';
 import RegisterPage from './pages/RegisterPage';
+import AllPage from './pages/AllPage';
 import HistoryPage from './pages/HistoryPage';
 import { UserProvider } from './context/UserContext';
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/meals" element={<MealPage />} />
           <Route path="/recipe" element={<ResipePage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/all" element={<AllPage />} />
           <Route path="/history" element={<HistoryPage />} />
         </Routes>
         {shouldShowHeaderFooter() && <Footer />}

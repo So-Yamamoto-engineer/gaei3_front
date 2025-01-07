@@ -32,7 +32,7 @@ function MealPage() {
     const [mealsInfo, setMealsInfo] = useState([]);
     const [error, setError] = useState(null);
     const handleCardClick = (meal) => {
-        navigate('/recipe', { state: { name: meal } });
+        navigate('/recipe', { state: { meal: meal } });
     };
 
     useEffect(() => {

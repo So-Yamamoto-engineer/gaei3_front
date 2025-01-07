@@ -18,8 +18,8 @@ const Footer = () => {
       navigate('/upload');
     };
 
-    const handleNavigateToHistoryPage = () => {
-      navigate('/history');
+    const handleNavigateToAllPage = () => {
+      navigate('/all');
     };
 
 
@@ -41,7 +41,7 @@ const Footer = () => {
       }}
     >
       <RestaurantIcon onClick={handleNavigateToUploadPage} sx={{ fontSize: 40 }}/>
-      <ImportContactsIcon onClick={handleNavigateToHistoryPage}sx={{ fontSize: 40 }}/>
+      <ImportContactsIcon onClick={handleNavigateToAllPage}sx={{ fontSize: 40 }}/>
       <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/>
     </Box>
   );
