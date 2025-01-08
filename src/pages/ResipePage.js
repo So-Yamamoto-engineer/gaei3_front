@@ -12,9 +12,7 @@ import {
   CardContent,
 } from "@mui/material";
 
-
 import Groq from "groq-sdk";
-
 
 const groq = new Groq({ 
   apiKey: process.env.REACT_APP_GROQ_API_KEY,

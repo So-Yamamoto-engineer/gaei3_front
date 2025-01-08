@@ -6,7 +6,11 @@ import {
   Box,
   Typography,
   Input,
+  List,
+  ListItem
 } from "@mui/material";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 
 function UploadPage() {
   const navigate = useNavigate();
@@ -14,6 +18,14 @@ function UploadPage() {
   const handleNavigateToUpload = () => {
     navigate('/upload');
   };
+
+  const handleNavigateToFilter = () => {
+    navigate('/filter');
+  };
+
+  const handleNavigateToMeals = () => {
+    navigate('/meal', { state: { prediction } });
+  }
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
@@ -82,17 +94,13 @@ function UploadPage() {
     setisThinkButtonsVisible(false);
   };
 
-  const handleThink = () => {
-    navigate('/meals', { state: { prediction } });
-  }
-
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        mt: 12,
+        mt: 8,
         mb:10
       }}
     >
@@ -100,25 +108,34 @@ function UploadPage() {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
               justifyContent: 'center',
               textAlign: 'center',
             }}
         >
-            <Typography variant="h5" component="h1" sx={{
-              mb:5,
-              fontWeight: 'bold',
-            }}>
-                写真をアップロード<br/>してください
-            </Typography>
-
             {!selectedImage ? (
+              <Box 
+              sx={{
+                mt:20
+              }}
+              >
+                <Typography variant="h5" component="h1"
+                sx={{
+                  fontWeight: 'bold',
+                }}>
+                    写真をアップロード<br/>してください
+                </Typography>
                 <Button
                     variant="outlined"
                     component="label"
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<CloudUploadIcon sx={{ color:"black" }}/>}
                     sx={{
-                    padding: '10px 20px',
+                      mt: 4, 
+                      pl: 4,
+                      pr: 4,
+                      pt: 2,
+                      pb: 2,
+                      color: "black",
+                      borderColor: "black",
                     }}
                 >
                     ファイルを選択
@@ -126,54 +143,111 @@ function UploadPage() {
                         type="file"
                         accept="image/*"
                         onChange={handleFileChange}
-                        sx={{ display: 'none' }}
+                        sx={{ display: 'none'}}
                     />
                 </Button>
+              </Box>
             ) : (
-                <Box sx={{ textAlign: 'center' }}>
-                    <img
-                        src={selectedImage}
-                        alt="Uploaded Preview"
-                        style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '16px' }}
-                    />
-                    {isConfirmButtonsVisible && (
-                      <Box
-                      sx={{
-                        display: "flex",
-                        gap: 2,
-                        justifyContent: "center",
-                        marginTop: 2,
-                      }}
-                      >
-                        <Box>
-                          <Typography variant="h6">この写真でレシピを生成しますか</Typography>
-                          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-                            <Button variant="outlined" color="primary" onClick={handleConfirm} >
-                              OK
-                            </Button>
-                            <Button variant="outlined" color="error" onClick={handleRetry}>
-                              No
-                            </Button>
-                          </Box>
+                <Box sx={{ textAlign: 'center', mt: 2, ml: 2, mr: 2 }}>
+                  <img
+                      src={selectedImage}
+                      alt="Uploaded Preview"
+                      style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '16px',  borderRadius: '8px' }}
+                  />
+                  {isConfirmButtonsVisible && (
+                    <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: 1,
+                    }}
+                    >
+                      <Box>
+                        <Typography variant="h6">この写真でレシピを生成しますか</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 1 }}>
+                          <Button variant="outlined" onClick={handleConfirm}
+                            sx={{
+                              color: "black",
+                              borderColor: "black",
+                            }}
+                          >
+                            はい
+                          </Button>
+                          <Button variant="outlined" onClick={handleRetry}
+                            sx={{
+                              color: "black",
+                              borderColor: "black",
+                            }}
+                          >
+                            いいえ
+                          </Button>
                         </Box>
                       </Box>
-                    )}
+                    </Box>
+                  )}
                 </Box>
             )}
 
             {/* 画像認識結果を表示 */}
             {prediction && (
-              <Box sx={{ marginTop: 3 }}>
-                <Typography variant="h6">認識結果</Typography>
-                <ul>
-                  {prediction.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+              <Box>
+                  {/* <Typography variant="h6" sx={{fontWeight: 'bold'}}>認識結果</Typography>
+                  <List sx={{border: "3px solid #333", mb: 2, ml: 2, mr: 2, borderTop: "none"}}>
+                    {prediction.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </List> */}
+                  <Box sx={{ position: "relative", mb: 4, ml: 2, mr: 2 }}>
+                    {/* ボーダー付きのリスト */}
+                    <List sx={{ border: "3px solid #333", m: 0 }}>
+                      {prediction.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </List>
+
+                    {/* 「認識結果」テキスト */}
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: "bold",
+                        position: "absolute",
+                        top: "-14px", 
+                        left: "17%", 
+                        transform: "translateX(-50%)",
+                        backgroundColor: "#fff",
+                        px: 1,
+                      }}
+                    >
+                      認識結果
+                    </Typography>
+                  </Box>
+
                 {isThinkButtonsVisible && (
-                  <Button variant="outlined" color="error" onClick={handleThink}>
-                  料理を見る
-                  </Button>
+                  <Box 
+                    sx={{ 
+                      display: 'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2
+                    }}>
+                    <Button variant="outlined" color="error" onClick={handleNavigateToFilter}
+                      sx={{
+                        color: "black",
+                        borderColor: "black",
+                        width: "70%"
+                      }}
+                    >
+                      <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "10px" }} />
+                      条件を絞ってから料理を見る
+                    </Button>
+                    <Button variant="outlined" color="error" onClick={handleNavigateToMeals}
+                      sx={{
+                        color: "black",
+                        borderColor: "black",
+                        width: "70%"
+                      }}
+                    >
+                      <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "10px" }} />
+                      すぐに料理を見る
+                    </Button>
+                  </Box>
                 )}
               </Box>
             )}

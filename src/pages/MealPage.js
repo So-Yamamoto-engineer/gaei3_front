@@ -27,7 +27,12 @@ const groq = new Groq({
 function MealPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const prediction = location.state?.prediction || []; // 食材リスト
+    const prediction = location.state?.prediction || [];
+    const flavor = location.state?.flavor || ""; 
+    const spiceLevel = location.state?.spiceLevel || ""; 
+    const cookingTime = location.state?.cookingTime || 0; 
+		console.log(prediction, flavor , spiceLevel, cookingTime)
+
     const [loading, setLoading] = useState(true);
     const [mealsInfo, setMealsInfo] = useState([]);
     const [error, setError] = useState(null);

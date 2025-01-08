@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 
 const Footer = () => {
 
@@ -22,6 +23,12 @@ const Footer = () => {
       navigate('/all');
     };
 
+    const handleNavigateToShoppingListPage = () => {
+      navigate('/shopping-list');
+    };
+
+    
+
 
   return (
     <Box
@@ -31,17 +38,18 @@ const Footer = () => {
         left: 0,
         right: 0,
         padding: 1.3,
-        backgroundColor: '#edf5ff',
+        backgroundColor: '#ffffff',
         
         display: "flex",
         justifyContent: "space-evenly",
         alignItems: "center", 
         
-        boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 -1px 2px rgba(0, 0, 0, 0.1)',
       }}
     >
       <RestaurantIcon onClick={handleNavigateToUploadPage} sx={{ fontSize: 40 }}/>
       <ImportContactsIcon onClick={handleNavigateToAllPage}sx={{ fontSize: 40 }}/>
+      <ChecklistRtlIcon onClick={handleNavigateToShoppingListPage} sx={{ fontSize: 40 }}/>
       <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/>
     </Box>
   );

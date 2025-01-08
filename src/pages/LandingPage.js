@@ -57,7 +57,7 @@ function LandingPage() {
             component="h1" 
             sx={{ mb: 5, fontSize: '3rem', color: 'Black', fontWeight: 'bold' }}
         >
-            Let’s Cooking
+            Let’s Cook
         </Typography>
 
         <Box sx={{
@@ -80,7 +80,13 @@ function LandingPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='パスワード'
             />
-            <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
+            <Button variant="outlined" fullWidth onClick={handleLogin}
+            sx={{
+              mt: 2,
+              color: "black",
+              borderColor: "black",
+            }}
+            >
                 ログイン
             </Button>
             <Typography variant="body2" color="error" align="center" sx={{ m: 1.7 }}>

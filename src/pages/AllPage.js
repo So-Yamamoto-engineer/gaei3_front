@@ -46,19 +46,19 @@ function AllPage() {
           {/* 料理設定系 */}
           <ListItem onClick={handleNavigateToHistory} sx={{ borderBottom: '1px solid #e0e0e0' }}>
             <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="過去の料理を見る" />
           </ListItem>
           <ListItem  onClick={handleNavigateToPopularMeals} sx={{ borderBottom: '1px solid #e0e0e0' }}>
             <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="人気のレシピを見る" />
           </ListItem>
           <ListItem  onClick={handleNavigateToBalance} sx={{ mb: 3 }}>
             <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="バランス" />
           </ListItem>
@@ -70,49 +70,49 @@ function AllPage() {
           <ListItem >
           {/* <ListItem button onClick={handleNavigateToSettingsIcon}> */}
             <ListItemIcon>
-              <SettingsIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <SettingsIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="環境設定" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangeName}> */}
           <ListItem>
             <ListItemIcon>
-              <EditIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <EditIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="名称変更" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangeEmail}> */}
           <ListItem>
             <ListItemIcon>
-              <EmailIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <EmailIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="メールアドレス変更" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangePassword}> */}
           <ListItem>
             <ListItemIcon>
-              <LockIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <LockIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="パスワード変更" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToNotificationSettingsIcon}> */}
           <ListItem>
             <ListItemIcon>
-              <NotificationsIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <NotificationsIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="通知設定" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToLanguageSettingsIcon}> */}
           <ListItem>
             <ListItemIcon>
-              <LanguageIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <LanguageIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="言語設定" />
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToDeleteAccount}> */}
           <ListItem>
             <ListItemIcon>
-              <DeleteIcon sx={{ color: 'primary.main', fontSize: 30 }} />
+              <DeleteIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="アカウント削除" />
           </ListItem>
