@@ -79,7 +79,8 @@ function ResultPage() {
           // const chatCompletion = await getGroqChatCompletion(ingredients);
           // const content = chatCompletion.choices[0]?.message?.content || "No recipe found.";
 
-          const content = `"{"title": ${mealName},"steps": ["Chop the carrot and potato into bite-sized pieces. Cut the cabbage into thin strips. Slice the pork into thin strips as well.", "Heat 2 tablespoons of oil in a large skillet or wok over medium-high heat. Add the pork and stir-fry until browned, about 3-4 minutes.", "Add the chopped carrot and potato to the skillet or wok. Stir-fry for about 5 minutes, or until they start to soften.", "Add the cabbage to the skillet or wok and stir-fry for another 2-3 minutes, or until the vegetables are tender-crisp.", "Season with salt and pepper to taste. Serve hot and enjoy!"]}`
+          // const content = `"{"title": ${mealName},"steps": ["Chop the carrot and potato into bite-sized pieces. Cut the cabbage into thin strips. Slice the pork into thin strips as well.", "Heat 2 tablespoons of oil in a large skillet or wok over medium-high heat. Add the pork and stir-fry until browned, about 3-4 minutes.", "Add the chopped carrot and potato to the skillet or wok. Stir-fry for about 5 minutes, or until they start to soften.", "Add the cabbage to the skillet or wok and stir-fry for another 2-3 minutes, or until the vegetables are tender-crisp.", "Season with salt and pepper to taste. Serve hot and enjoy!"]}`
+          const content = `{"title": ${mealName},"steps": ["にんじんとじゃがいもを一口大に切ります。キャベツは細切りにし、豚肉も薄切りにします。", "大きなフライパンまたは中華鍋に大さじ2の油を入れて、中火から強火で熱します。豚肉を加え、約3〜4分間炒めて、豚肉に焼き色をつけます。", "フライパンまたは中華鍋に切ったにんじんとじゃがいもを加え、約5分間炒めて、柔らかくなるまで加熱します。", "キャベツをフライパンまたは中華鍋に加え、さらに2〜3分間炒めて、野菜がシャキっとするまで加熱します。", "塩とこしょうで味を調え、熱いうちにお召し上がりください！"]}`
 
           const titleRegex = /"title":\s*"(.*?)"/;
           const stepsRegex = /"steps":\s*\[(.*?)\]/s;
@@ -124,7 +125,7 @@ function ResultPage() {
             alignItems: 'center',
             // height: '100vh', // 画面全体の高さをカバー
             textAlign: 'center', // テキストを中央揃えs
-            mt:10,
+            mt:5,
             mb:40
         }}
       >

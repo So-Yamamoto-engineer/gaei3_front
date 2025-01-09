@@ -51,14 +51,15 @@ const RecipeFilterPage = () => {
   };
 
   return (
-    <Box sx={{ padding: 3, mt:10}}>
+    <Box sx={{ padding: 3, mt:8}}>
       <Typography variant="h4" gutterBottom>
         レシピ絞り込み
       </Typography>
       
       {/* 料理のカテゴリー */}
-      <FormControl fullWidth sx={{ marginBottom: 2 }}>
-        <InputLabel>料理のカテゴリー</InputLabel>
+      <FormControl fullWidth 
+        sx={{ marginBottom: 2 }}>
+        <InputLabel>味の特徴</InputLabel>
         <Select
           value={flavor}
           onChange={(e) => setFlavor(e.target.value)}
@@ -71,8 +72,9 @@ const RecipeFilterPage = () => {
       </FormControl>
       
       {/* スパイスレベル */}
-      <FormControl fullWidth sx={{ marginBottom: 2 }}>
-        <InputLabel>スパイス</InputLabel>
+      <FormControl fullWidth 
+        sx={{ marginBottom: 2 }}>
+        <InputLabel>からさ</InputLabel>
         <Select
           value={spiceLevel}
           onChange={(e) => setSpiceLevel(e.target.value)}
@@ -99,12 +101,21 @@ const RecipeFilterPage = () => {
         max={120} // 最大値を120分に設定
         value={cookingTime}
         onChange={(e) => setCookingTime(e.target.value)}
+        sx={{
+          color: "black",
+          borderColor: "black",
+        }}
       />
     </Box>
       
       {/* フィルター適用ボタン */}
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
-        <Button variant="contained" color="primary" onClick={handleNavigateToMeals}>
+        <Button variant="outlined" color="primary" onClick={handleNavigateToMeals}
+        sx={{
+          color: "black",
+          borderColor: "black",
+        }}
+        >
           絞り込んでレシピを表示
         </Button>
       </Box>

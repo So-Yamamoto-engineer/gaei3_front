@@ -10,6 +10,7 @@ import {
   } from "@mui/material";
 import axios from 'axios';
 import { useUser } from '../context/UserContext'
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -50,14 +51,17 @@ function LandingPage() {
             alignItems: 'center',
             height: '100vh', // 画面全体の高さをカバー
             textAlign: 'center', // テキストを中央揃え
+            boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.3)',
+            // background: 'linear-gradient(to right, black, white)',  // グラデーションの背景
         }}
     >
+          <LocalDiningIcon sx={{mb:2, fontSize: '100px'}}/>
         <Typography  
             variant="h1" 
             component="h1" 
             sx={{ mb: 5, fontSize: '3rem', color: 'Black', fontWeight: 'bold' }}
         >
-            Let’s Cook
+          Let’s Cook
         </Typography>
 
         <Box sx={{
