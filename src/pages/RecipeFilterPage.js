@@ -3,7 +3,6 @@ import { Box, Typography, FormControl, InputLabel, Select, MenuItem, Button, Sli
 import TimeSlider from '../components/TimeSlider'
 import { useNavigate } from 'react-router-dom';
 
-
 const RecipeFilterPage = () => {
   const navigate = useNavigate();
   const [flavor, setFlavor] = useState('');
@@ -44,7 +43,6 @@ const RecipeFilterPage = () => {
       spiceLevel,
       cookingTime
     };
-
     navigate('/meal' , {state: filterData })
     // LLMにフィルターデータを投げる処理を追加
     console.log("Filtered data sent to LLM: ", filterData);

@@ -5,10 +5,15 @@ import { Box, Typography, CircularProgress, Card, CardContent, CardMedia } from 
 import { useNavigate } from 'react-router-dom';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+import { usePrediction } from '../context/PredictionContext';
+
+
 function MealPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const prediction = location.state?.prediction || [];
+    
+    // const prediction = location.state?.prediction || [];
+    const { prediction, setPrediction } = usePrediction();
     const flavor = location.state?.flavor || ""; 
     const spiceLevel = location.state?.spiceLevel || ""; 
     const cookingTime = location.state?.cookingTime || 0; 
@@ -23,34 +28,48 @@ function MealPage() {
     useEffect(() => {
       const genAI = new GoogleGenerativeAI("AIzaSyDg0NHIkQTXDhGP2_vZf-tBhyO9Dafs_GI");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      
-      const prompt = `
-      以下のJSON形式で、与えられた食材データ(${prediction})を基に作れる料理を提案してください。各料理は名前、難易度（簡単、普通、難しいのいずれか）、所要時間（時間単位で）、カロリー量（"多い"、"普通"、"少ない"のいずれか）、およびイメージ画像のパスを含む必要があります。
-      以下は出力例です。imageはあなたは考えず必ず"/curry.png"にしてください。それ以外のname,difficulty,time,calorieはあなたが考えて。
-      [
-        {
-          "name": "カレー",
-          "difficulty": "簡単",
-          "time": 1,
-          "calorie": "多い",
-          "image": "/curry.png"
-        },
-        {
-          "name": "豚汁",
-          "difficulty": "普通",
-          "time": 1.5,
-          "calorie": "普通",
-          "image": "/tonjiru.png"
-        },
-        {
-          "name": "肉じゃが",
-          "difficulty": "簡単",
-          "time": 1,
-          "calorie": "少ない",
-          "image": "/nikujaga.png"
-        }
-      ]
-      `;
+      let prompt = `
+    以下のJSON形式で、与えられた食材データ(${prediction})を基に作れる料理を提案してください。
+    `;
+  
+  // Conditionally add flavor, spiceLevel, and cookingTime if they are not empty or 0
+  if (flavor) {
+    prompt += `この時、${flavor}`;
+  }
+  if (spiceLevel) {
+    prompt += `、${spiceLevel}`;
+  }
+  if (cookingTime > 0) {
+    prompt += `、${cookingTime}時間`;
+  }
+
+  prompt += `を考慮してください。
+    各料理は名前、難易度（簡単、普通、難しいのいずれか）、所要時間（時間単位で）、カロリー量（"多い"、"普通"、"少ない"のいずれか）、およびイメージ画像のパスを含む必要があります。
+    以下は出力例です。imageはあなたは考えず必ず"/curry.png"にしてください。それ以外のname,difficulty,time,calorieはあなたが考えて。
+    [
+      {
+        "name": "カレー",
+        "difficulty": "簡単",
+        "time": 1,
+        "calorie": "多い",
+        "image": "/curry.png"
+      },
+      {
+        "name": "豚汁",
+        "difficulty": "普通",
+        "time": 1.5,
+        "calorie": "普通",
+        "image": "/tonjiru.png"
+      },
+      {
+        "name": "肉じゃが",
+        "difficulty": "簡単",
+        "time": 1,
+        "calorie": "少ない",
+        "image": "/nikujaga.png"
+      }
+    ]
+  `;
       
         async function fetchMealNames() {
             try {

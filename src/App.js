@@ -10,6 +10,8 @@ import HistoryPage from './pages/HistoryPage';
 import RecipeFilterPage from './pages/RecipeFilterPage';
 import ShoppingListPage from './pages/ShoppingListPage';
 import { UserProvider } from './context/UserContext';
+import { PredictionProvider } from './context/PredictionContext';
+
 
 
 import Footer from './components/Footer';
@@ -26,6 +28,7 @@ function App() {
   return (
     <>
       <UserProvider>
+      <PredictionProvider>
         {shouldShowHeaderFooter() && <Header />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -39,6 +42,7 @@ function App() {
           <Route path="/shopping-list" element={<ShoppingListPage />} />
         </Routes>
         {shouldShowHeaderFooter() && <Footer />}
+      </PredictionProvider>
       </UserProvider>
     </>
   );

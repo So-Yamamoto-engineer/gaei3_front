@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import { usePrediction } from '../context/PredictionContext';
 
 function UploadPage() {
   const navigate = useNavigate();
@@ -30,9 +31,14 @@ function UploadPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const [prediction, setPrediction] = useState(null);  // 認識結果を格納する状態
+  const { prediction, setPrediction } = usePrediction();
+  // const [prediction, setPrediction] = useState(null);  // 認識結果を格納する状態
   const [isConfirmButtonsVisible, setIsConfirmButtonsVisible] = useState(true);//確認ボタンを表示するか
   const [isThinkButtonsVisible, setisThinkButtonsVisible] = useState(false);//ボタンを表示するか
+
+  useEffect(() => {
+    setPrediction(null); // Reset the prediction on page load
+  }, [setPrediction]); 
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
