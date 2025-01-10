@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Card, CardContent, CardMedia } from "@mui/material";
-import Groq from "groq-sdk";
+// import Groq from "groq-sdk";
 import { useNavigate } from 'react-router-dom';
-
-const groq = new Groq({ 
-  apiKey: process.env.REACT_APP_GROQ_API_KEY,
-  dangerouslyAllowBrowser: true
-});
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 function MealPage() {
     const navigate = useNavigate();
@@ -16,7 +12,6 @@ function MealPage() {
     const flavor = location.state?.flavor || ""; 
     const spiceLevel = location.state?.spiceLevel || ""; 
     const cookingTime = location.state?.cookingTime || 0; 
-		console.log(prediction, flavor , spiceLevel, cookingTime)
 
     const [loading, setLoading] = useState(true);
     const [mealsInfo, setMealsInfo] = useState([]);
@@ -26,33 +21,71 @@ function MealPage() {
     };
 
     useEffect(() => {
+      const genAI = new GoogleGenerativeAI("AIzaSyDg0NHIkQTXDhGP2_vZf-tBhyO9Dafs_GI");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      
+      const prompt = `
+      以下のJSON形式で、与えられた食材データ(${prediction})を基に作れる料理を提案してください。各料理は名前、難易度（簡単、普通、難しいのいずれか）、所要時間（時間単位で）、カロリー量（"多い"、"普通"、"少ない"のいずれか）、およびイメージ画像のパスを含む必要があります。
+      以下は出力例です。imageはあなたは考えず必ず"/curry.png"にしてください。それ以外のname,difficulty,time,calorieはあなたが考えて。
+      [
+        {
+          "name": "カレー",
+          "difficulty": "簡単",
+          "time": 1,
+          "calorie": "多い",
+          "image": "/curry.png"
+        },
+        {
+          "name": "豚汁",
+          "difficulty": "普通",
+          "time": 1.5,
+          "calorie": "普通",
+          "image": "/tonjiru.png"
+        },
+        {
+          "name": "肉じゃが",
+          "difficulty": "簡単",
+          "time": 1,
+          "calorie": "少ない",
+          "image": "/nikujaga.png"
+        }
+      ]
+      `;
+      
         async function fetchMealNames() {
             try {
-							const gotMealsInfo = [
-                {
-                  name: "カレー",
-                  difficulty: "簡単",
-                  time: 1,
-                  calorie: "多い",
-                  image: "/curry.png"
-                },
-                {
-                  name: "ラーメン",
-                  difficulty: "難しい",
-                  time: 1.5,
-                  calorie: "普通",
-                  image: "/ramen.png"
-                },
-                {
-                  name: "寿司",
-                  difficulty: "普通",
-                  time: 2,
-                  calorie: "少ない",
-                  image: "/susi.png"
-                }
-              ];              
+              const result = await model.generateContent(prompt);
+              const jsonString = result.response.text().replace(/```json|```/g, '');
+              const gotMealsInfo = JSON.parse(jsonString);
+              // const response = await getGroqChatCompletion(prediction); // 入力としてpredictionを使用
+              // const generatedMeals = response.choices[0].message.content; // JSONとしてパース
+							// console.log(generatedMeals)
+              // const gotMealsInfo = [
+              //   {
+              //     name: "カレー",
+              //     difficulty: "簡単",
+              //     time: 1,
+              //     calorie: "多い",
+              //     image: "/curry.png"
+              //   },
+              //   {
+              //     name: "ラーメン",
+              //     difficulty: "難しい",
+              //     time: 1.5,
+              //     calorie: "普通",
+              //     image: "/ramen.png"
+              //   },
+              //   {
+              //     name: "寿司",
+              //     difficulty: "普通",
+              //     time: 2,
+              //     calorie: "少ない",
+              //     image: "/susi.png"
+              //   }
+              // ];              
 
               setMealsInfo(gotMealsInfo);
+              // setMealsInfo(generatedMeals);
             } catch (err) {
               console.error("Error fetching meal names:", err);
               setError("Failed to fetch meal names. Please try again later.");

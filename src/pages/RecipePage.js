@@ -13,6 +13,14 @@ import {
   CardMedia
 } from "@mui/material";
 
+// {
+//   "name": "カレー",
+//   "difficulty": "簡単",
+//   "time": 1,
+//   "calorie": "多い",
+//   "image": "/curry.png"
+// },
+
 import Groq from "groq-sdk";
 
 const groq = new Groq({ 
