@@ -12,6 +12,8 @@ import {
   CardContent,
   CardMedia
 } from "@mui/material";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
 
 // {
 //   "name": "カレー",
@@ -21,26 +23,26 @@ import {
 //   "image": "/curry.png"
 // },
 
-import Groq from "groq-sdk";
+// import Groq from "groq-sdk";
 
-const groq = new Groq({ 
-  apiKey: process.env.REACT_APP_GROQ_API_KEY,
-  dangerouslyAllowBrowser: true
- });
+// const groq = new Groq({ 
+//   apiKey: process.env.REACT_APP_GROQ_API_KEY,
+//   dangerouslyAllowBrowser: true
+//  });
 
-async function getGroqChatCompletion(ingredients) {
-  return groq.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: `
-          Please generate a recipe in English using the following ingredients:["Carrot", "Pork", "Potato", "Cabbage"]. The output must strictly follow the JSON format below. Ensure that the JSON does not contain any newline characters or additional information outside this format:{"title": "Recipe Title","steps": ["Step 1 description","Step 2 description",...]}
-        `,
-      },
-    ],
-    model: "llama3-8b-8192",
-  });
-}
+// async function getGroqChatCompletion(ingredients) {
+//   return groq.chat.completions.create({
+//     messages: [
+//       {
+//         role: "user",
+//         content: `
+//           Please generate a recipe in English using the following ingredients:["Carrot", "Pork", "Potato", "Cabbage"]. The output must strictly follow the JSON format below. Ensure that the JSON does not contain any newline characters or additional information outside this format:{"title": "Recipe Title","steps": ["Step 1 description","Step 2 description",...]}
+//         `,
+//       },
+//     ],
+//     model: "llama3-8b-8192",
+//   });
+// }
 
 function RecipePage() {
     const location = useLocation();
@@ -51,10 +53,13 @@ function RecipePage() {
     const [error, setError] = useState(null);
 
     const RecipeSteps = ({ recipe }) => {
+      if (!Array.isArray(recipe)) {
+        return <Typography variant="body1">Invalid recipe format.</Typography>;
+      }
+    
       return (
-        <Box sx={{ width: '90%', 
-         }}>
-          {recipe.steps.map((step, index) => (
+        <Box sx={{ width: '90%' }}>
+          {recipe.map((step, index) => (
             <Card key={index} sx={{ marginBottom: 2 }}>
               <CardContent>
                 <Typography variant="h6" component="h2">
@@ -69,44 +74,77 @@ function RecipePage() {
         </Box>
       );
     };
+    
 
     useEffect(() => {
-        async function fetchRecipe() {
+      const genAI = new GoogleGenerativeAI("AIzaSyDg0NHIkQTXDhGP2_vZf-tBhyO9Dafs_GI");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      setMeal(props_meal);
+      const mealData = {
+        name: meal.name,
+        calorie: meal.calorie,
+        difficulty: meal.difficulty,
+        time: meal.time,
+        image: meal.image
+      };
+      const prompt = `
+      次の料理情報に基づいてレシピを考案してください。
+料理情報
+{
+"name":${mealData.name},
+"difficulty": ${mealData.difficulty},
+"time": ${mealData.time},
+"calorie":${mealData.calorie},
+"image": "/curry.png"
+},
+レシピは以下のステップごとに分け、順番に配列として出力してください。
+
+例: ["ステップ1の内容", "ステップ2の内容", "ステップ3の内容", ...]
+
+出力形式:
+- ステップごとの手順を順番に並べた配列
+- 各手順は簡潔に説明してください
+- 食材や調理方法に関しても言及してください
+      `;
+
+      // async function fetchRecipe() {
+      // try {
+      //   const result = await model.generateContent(prompt);
+      //   const result_txt = result.response.text()
+      //   console.log(result_txt)
+      //   const resipe_think_result = result_txt.replace(/```json|```/g, '');
+      //   console.log(resipe_think_result)
+
+      //   setRecipe(resipe_think_result);
+      // } catch (err) {
+      //     console.error("Error fetching recipe:", err);
+      //     setError("Failed to fetch recipe. Please try again later.");
+      // } finally {
+      //     setLoading(false);
+      // }
+      // }
+
+      async function fetchRecipe() {
         try {
-          const content = `{"title": ${meal.name},"steps": ["にんじんとじゃがいもを一口大に切ります。キャベツは細切りにし、豚肉も薄切りにします。", "大きなフライパンまたは中華鍋に大さじ2の油を入れて、中火から強火で熱します。豚肉を加え、約3〜4分間炒めて、豚肉に焼き色をつけます。", "フライパンまたは中華鍋に切ったにんじんとじゃがいもを加え、約5分間炒めて、柔らかくなるまで加熱します。", "キャベツをフライパンまたは中華鍋に加え、さらに2〜3分間炒めて、野菜がシャキっとするまで加熱します。", "塩とこしょうで味を調え、熱いうちにお召し上がりください！"]}`
-
-          const titleRegex = /"title":\s*"(.*?)"/;
-          const stepsRegex = /"steps":\s*\[(.*?)\]/s;
-
-          // タイトル抽出
-          const titleMatch = content.match(titleRegex);
-          const title = titleMatch ? titleMatch[1] : null;
-
-          // ステップ抽出と加工
-          const stepsMatch = content.match(stepsRegex);
-          const steps = stepsMatch
-            ? stepsMatch[1]
-                .split(/",\s*"/) // 配列内の要素を分割
-                .map(step => step.replace(/(^"|"$|\n)/g, '').trim()) // 各ステップから不要な文字を削除
-            : [];
-
-          // console.log("Title:", typeof(title));
-          // console.log("Steps:", typeof(steps));
-          const resipe_think_result = {
-            title: title,
-            steps: steps
-          };
-
-          setRecipe(resipe_think_result);
+          const result = await model.generateContent(prompt);
+          const result_txt = result.response.text();
+          const jsonString = result_txt.replace(/```json|```/g, '');
+          console.log(jsonString);
+          
+          // Ensure the result is in the correct array format
+          const recipeArray = JSON.parse(jsonString); // Assuming the output is in JSON format
+          
+          setRecipe(recipeArray); // Set recipe to the array
         } catch (err) {
-            console.error("Error fetching recipe:", err);
-            setError("Failed to fetch recipe. Please try again later.");
+          console.error("Error fetching recipe:", err);
+          setError("Failed to fetch recipe");
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-        }
+      }
+      
 
-        fetchRecipe();
+      fetchRecipe();
     }, []);
 
     return (
