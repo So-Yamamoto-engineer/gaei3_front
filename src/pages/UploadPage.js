@@ -80,9 +80,12 @@ function UploadPage() {
       if (data !== null) {
         console.log(data)
         setisThinkButtonsVisible(true);
+        if (data.error == null){
+          setPrediction(data);  // 認識結果を状態に保存
+        }else{
+          setPrediction(data.error);
+        }
       }
-
-      setPrediction(data.error);  // 認識結果を状態に保存
     } catch (error) {
       console.error("Error during image recognition:", error);
     }
