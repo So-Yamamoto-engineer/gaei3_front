@@ -34,6 +34,7 @@ function LandingPage() {
       handleNavigateToUpload();
       login(username)
     } catch (error) {
+      console.log(error)
       const message =
       error.response && error.response.data && error.response.data.message
         ? error.response.data.message

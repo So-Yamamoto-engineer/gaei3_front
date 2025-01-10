@@ -55,35 +55,37 @@ function UploadPage() {
 
     setIsConfirmButtonsVisible(false); // ボタンを非表示にする
 
-    // 画像ファイルをFormDataに追加
     const file = selectedImageFile;  // プレビュー画像をそのまま使用
     const formData = new FormData();
     formData.append('image', file);
 
     // Flaskサーバーに画像を送信して認識結果を受け取る
-    // try {
-    //   // console.log(file)
-    //   const response = await fetch('http://127.0.0.1:5000/predict', {
-    //     method: 'POST',
-    //     body: formData,
-    //   });
+    try {
+      // console.log(file)
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        body: formData,
+      });
       
-      const data = [
-        "ニンジン",
-        "豚肉",
-        "じゃがいも",
-        "玉ねぎ"
-      ];
+      // const data = [
+      //   "ニンジン",
+      //   "豚肉",
+      //   "じゃがいも",
+      //   "玉ねぎ"
+      // ];
 
+      console.log(response)
+      const data = await response.json();
+      
       if (data !== null) {
+        console.log(data)
         setisThinkButtonsVisible(true);
       }
 
-      // const data = await response.json();
-      setPrediction(data);  // 認識結果を状態に保存
-    // } catch (error) {
-    //   console.error("Error during image recognition:", error);
-    // }
+      setPrediction(data.error);  // 認識結果を状態に保存
+    } catch (error) {
+      console.error("Error during image recognition:", error);
+    }
   };
 
   const handleRetry = () => {
