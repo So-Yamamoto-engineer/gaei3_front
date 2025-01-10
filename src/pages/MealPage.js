@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Typography, CircularProgress, Card, CardContent, CardMedia } from "@mui/material";
+import { Box, Typography, CircularProgress, Card, CardContent, CardMedia, Button } from "@mui/material";
 // import Groq from "groq-sdk";
 import { useNavigate } from 'react-router-dom';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -17,6 +17,11 @@ function MealPage() {
     const flavor = location.state?.flavor || ""; 
     const spiceLevel = location.state?.spiceLevel || ""; 
     const cookingTime = location.state?.cookingTime || 0; 
+    const age = location.state?.age || ""; 
+    const ingredientsToPrioritize = location.state?.ingredientsToPrioritize || ""; 
+    const allergicIngredients = location.state?.allergicIngredients || []; 
+    
+    
 
     const [loading, setLoading] = useState(true);
     const [mealsInfo, setMealsInfo] = useState([]);
@@ -33,8 +38,11 @@ function MealPage() {
     `;
   
   // Conditionally add flavor, spiceLevel, and cookingTime if they are not empty or 0
+  if (flavor || spiceLevel || cookingTime || age || ingredientsToPrioritize || allergicIngredients) {
+    prompt += `この時、`;
+  }
   if (flavor) {
-    prompt += `この時、${flavor}`;
+    prompt += `${flavor}`;
   }
   if (spiceLevel) {
     prompt += `、${spiceLevel}`;
@@ -42,8 +50,21 @@ function MealPage() {
   if (cookingTime > 0) {
     prompt += `、${cookingTime}時間`;
   }
+  if (age) {
+    prompt += `、${age}`;
+  }
+  if (ingredientsToPrioritize) {
+    prompt += `、${ingredientsToPrioritize}は優先してほしい食材、`;
+  }
+  if (allergicIngredients) {
+    prompt += `、${allergicIngredients}はアレルギー、`;
+  }
+  
+  if (flavor || spiceLevel || cookingTime || age || ingredientsToPrioritize || allergicIngredients) {
+    prompt += `を考慮してください。`;
+  }
 
-  prompt += `を考慮してください。
+  prompt += `
     各料理は名前、難易度（簡単、普通、難しいのいずれか）、所要時間（時間単位で）、カロリー量（"多い"、"普通"、"少ない"のいずれか）、およびイメージ画像のパスを含む必要があります。
     以下は出力例です。imageはあなたは考えず必ず"/curry.png"にしてください。それ以外のname,difficulty,time,calorieはあなたが考えて。
     [
@@ -74,6 +95,7 @@ function MealPage() {
         async function fetchMealNames() {
             try {
               const result = await model.generateContent(prompt);
+              console.log(result.response.text())
               const jsonString = result.response.text().replace(/```json|```/g, '');
               const gotMealsInfo = JSON.parse(jsonString);
               // const response = await getGroqChatCompletion(prediction); // 入力としてpredictionを使用
@@ -134,6 +156,7 @@ function MealPage() {
           ) : error ? (
             <Typography color="error">{error}</Typography>
           ) : (
+            <>
             <Box sx={{ width: '80%', margin: '0 auto' }}>
                 {mealsInfo.map((meal, index) => (
                   <Card key={index} sx={{ marginBottom: 2, cursor: 'pointer', display: 'flex', flexDirection: 'row' }} onClick={() => handleCardClick(meal)}>
@@ -163,6 +186,14 @@ function MealPage() {
                   </Card>
                 ))}
             </Box>
+            <Button 
+              variant="outlined" 
+              onClick={() => navigate(-1)}  // 前のページに戻る
+              sx={{ marginBottom: 3 }}
+            >
+              戻る
+            </Button>
+          </>
           )}
         </Box>
     );

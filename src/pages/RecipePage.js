@@ -167,12 +167,12 @@ function RecipePage() {
             <Typography color="error">{error}</Typography>
         ) : (
           <>
-            <Card sx={{ mb: 0.5, display: 'flex', flexDirection: 'row',
+            <Card sx={{ mb: 1, display: 'flex', flexDirection: 'row',
               border: '1px solid #828282',
               borderRadius: '0px',
               boxShadow: 'none', 
              }}>
-              <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 5 }}>
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 5}}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
                   {meal.name}
                 </Typography>
