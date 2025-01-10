@@ -16,6 +16,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -118,6 +120,9 @@ function AllPage() {
           </ListItem>
           {/* <ListItem button onClick={handleNavigateToPrivacyPolicy}> */}
           <ListItem>
+          <ListItemIcon>
+              <PrivacyTipIcon sx={{ color: 'black', fontSize: 30 }} />
+            </ListItemIcon>
             <ListItemText primary="プライバシーポリシー・利用規約" />
           </ListItem>
         </List>

@@ -6,6 +6,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
+import DensitySmallIcon from '@mui/icons-material/DensitySmall';
 
 const Footer = () => {
 
@@ -48,7 +49,7 @@ const Footer = () => {
       }}
     >
       <RestaurantIcon onClick={handleNavigateToUploadPage} sx={{ fontSize: 40 }}/>
-      <ImportContactsIcon onClick={handleNavigateToAllPage}sx={{ fontSize: 40 }}/>
+      <DensitySmallIcon onClick={handleNavigateToAllPage}sx={{ fontSize: 35 }}/>
       <ChecklistRtlIcon onClick={handleNavigateToShoppingListPage} sx={{ fontSize: 40 }}/>
       <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/>
     </Box>
