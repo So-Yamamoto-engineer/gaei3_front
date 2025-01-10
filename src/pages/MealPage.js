@@ -97,7 +97,14 @@ function MealPage() {
             try {
               const result = await model.generateContent(prompt);
               console.log(result.response.text())
-              const jsonString = result.response.text().replace(/```json|```/g, '');
+              // const jsonString = result.response.text().replace(/```json|```/g, '');
+              const jsonString = result.response.text().match(/\[\s*{[\s\S]*?}\s*\]/)?.[0];
+              // if (jsonString) {
+              //     const gotMealsInfo = JSON.parse(jsonString);
+              //     console.log(gotMealsInfo);
+              // } else {
+              //     console.error("JSONデータが見つかりませんでした");
+              // }
               const gotMealsInfo = JSON.parse(jsonString);
               // const response = await getGroqChatCompletion(prediction); // 入力としてpredictionを使用
               // const generatedMeals = response.choices[0].message.content; // JSONとしてパース
