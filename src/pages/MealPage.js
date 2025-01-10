@@ -31,7 +31,8 @@ function MealPage() {
     };
 
     useEffect(() => {
-      const genAI = new GoogleGenerativeAI("AIzaSyDg0NHIkQTXDhGP2_vZf-tBhyO9Dafs_GI");
+      // console.log(process.env.REACT_APP_GEMINI_API_KEY);
+      const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       let prompt = `
     以下のJSON形式で、与えられた食材データ(${prediction})を基に作れる料理を提案してください。
