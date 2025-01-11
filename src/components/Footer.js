@@ -7,6 +7,7 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import DensitySmallIcon from '@mui/icons-material/DensitySmall';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Footer = () => {
 
@@ -27,6 +28,10 @@ const Footer = () => {
     const handleNavigateToShoppingListPage = () => {
       navigate('/shopping-list');
     };
+
+    const handleNavigateToSettingPage = () => {
+      navigate('setting');
+    }
 
     
 
@@ -51,7 +56,8 @@ const Footer = () => {
       <RestaurantIcon onClick={handleNavigateToUploadPage} sx={{ fontSize: 40 }}/>
       <DensitySmallIcon onClick={handleNavigateToAllPage}sx={{ fontSize: 35 }}/>
       <ChecklistRtlIcon onClick={handleNavigateToShoppingListPage} sx={{ fontSize: 40 }}/>
-      <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/>
+      {/* <LogoutIcon onClick={handleNavigateToLandingPage} sx={{ fontSize: 40 }}/> */}
+      <SettingsIcon onClick={handleNavigateToSettingPage} sx={{ fontSize: 40 }}/>
     </Box>
   );
 }

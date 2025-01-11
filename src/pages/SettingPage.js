@@ -17,11 +17,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { useNavigate } from 'react-router-dom';
 
 
-function AllPage() {
+function SettingPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const [loading, setLoading] = useState(true);
@@ -37,6 +38,10 @@ function AllPage() {
       navigate('/balance');
     };
 
+    const handleNavigateToLandingPage = () => {
+      navigate('/');
+    };
+
     return (
       <Box
         sx={{
@@ -45,90 +50,76 @@ function AllPage() {
         }}
       >
         <List>
-          {/* 料理設定系 */}
-          <ListItem onClick={handleNavigateToHistory} sx={{ borderBottom: '1px solid #e0e0e0' }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="過去の料理を見る" />
-          </ListItem>
-          <ListItem  onClick={handleNavigateToPopularMeals} sx={{ borderBottom: '1px solid #e0e0e0' }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="人気のレシピを見る" />
-          </ListItem>
-          <ListItem  onClick={handleNavigateToBalance} sx={{ mb: 3 }}>
-            <ListItemIcon>
-              <ArrowForwardIosIcon sx={{ color: 'black', fontSize: 30 }} />
-            </ListItemIcon>
-            <ListItemText primary="バランス" />
-          </ListItem>
-
           {/* 個人設定系 */}
-          {/* <Typography sx={{ml: 2}}>
+          <Typography sx={{ml: 2, fontSize:25, fontWeight: "bold"}}>
                 個人設定
-          </Typography> */}
-          {/* <ListItem > */}
+          </Typography>
+          <ListItem >
           {/* <ListItem button onClick={handleNavigateToSettingsIcon}> */}
-            {/* <ListItemIcon>
+            <ListItemIcon>
               <SettingsIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="環境設定" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangeName}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <EditIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="名称変更" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangeEmail}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <EmailIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="メールアドレス変更" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToChangePassword}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <LockIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="パスワード変更" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToNotificationSettingsIcon}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <NotificationsIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="通知設定" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToLanguageSettingsIcon}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <LanguageIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="言語設定" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToDeleteAccount}> */}
-          {/* <ListItem>
+          <ListItem>
             <ListItemIcon>
               <DeleteIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="アカウント削除" />
-          </ListItem> */}
+          </ListItem>
           {/* <ListItem button onClick={handleNavigateToPrivacyPolicy}> */}
-          {/* <ListItem>
+          <ListItem>
           <ListItemIcon>
               <PrivacyTipIcon sx={{ color: 'black', fontSize: 30 }} />
             </ListItemIcon>
             <ListItemText primary="プライバシーポリシー・利用規約" />
-          </ListItem> */}
-        </List>
+          </ListItem>
 
+          <ListItem onClick={handleNavigateToLandingPage}>
+            <ListItemIcon>
+              <LogoutIcon sx={{ fontSize: 30, color: "black" }}/>
+            </ListItemIcon>
+            <ListItemText primary="ログアウト" />
+          </ListItem>
+        </List>
       </Box>
     );
 }
 
-export default AllPage;
+export default SettingPage;

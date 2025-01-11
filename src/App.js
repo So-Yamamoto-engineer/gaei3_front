@@ -9,6 +9,8 @@ import AllPage from './pages/AllPage';
 import HistoryPage from './pages/HistoryPage';
 import RecipeFilterPage from './pages/RecipeFilterPage';
 import ShoppingListPage from './pages/ShoppingListPage';
+import SettingPage from './pages/SettingPage';
+
 import { UserProvider } from './context/UserContext';
 import { PredictionProvider } from './context/PredictionContext';
 
@@ -40,6 +42,7 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/filter" element={<RecipeFilterPage />} />
           <Route path="/shopping-list" element={<ShoppingListPage />} />
+          <Route path="/setting" element={<SettingPage />} />
         </Routes>
         {shouldShowHeaderFooter() && <Footer />}
       </PredictionProvider>
