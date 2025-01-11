@@ -390,9 +390,29 @@ const UploadPage = () => {
   
 
   return (
-    <Box sx={{ p: 1, mt: 8, maxHeight: 500, overflow: "auto",}}>
+    <Box sx={{
+      p: 1,
+      mt: 8,
+      mt: imageFiles.length > 0 ? 8 : 35, 
+      mb: 10,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      // minHeight: '100vh',
+      maxHeight: "100vh",
+      overflow: 'auto',
+      }}>
       {/* ファイル選択ボタン */}
-      <Button variant="contained" component="label">
+      <Button variant="outlined" component="label"
+      sx={{
+        color: "black",
+        borderColor: "black",
+        width: "100%",
+        pt: imageFiles.length > 0 ? 1 : 5, 
+        pb: imageFiles.length > 0 ? 1 : 5, 
+      }}
+      >
         ファイルを選択
         <input
           type="file"
@@ -443,7 +463,12 @@ const UploadPage = () => {
       {/* 推測ボタン */}
       {imageFiles.length > 0 && (
         <Box sx={{ mt: 4 }}>
-          <Button variant="contained" color="primary" onClick={handlePredict}>
+          <Button variant="outlined" color="primary" onClick={handlePredict}
+          sx={{
+            color: "black",
+            borderColor: "black",
+          }}
+          >
             推測する
           </Button>
         </Box>
@@ -453,42 +478,43 @@ const UploadPage = () => {
       {prediction && prediction.length > 0 && (
         <>
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{fontWeight: "bold"}} >
             認識結果
           </Typography>
           <ul>
             {prediction.map((result, index) => (
               <li key={index}>
-                ファイル {index + 1}: {result.join(", ")}
+                 {index + 1}個目のファイル: {result.join(", ")}
               </li>
             ))}
           </ul>
         </Box>
         <Box 
-        sx={{ 
-          display: 'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2
-        }}>
-        <Button variant="outlined" color="error" onClick={handleNavigateToFilter}
-          sx={{
-            color: "black",
-            borderColor: "black",
-            width: "70%"
-          }}
-        >
-          <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "10px" }} />
-          条件を絞ってから料理を見る
-        </Button>
-        <Button variant="outlined" color="error" onClick={handleNavigateToMeals}
-          sx={{
-            color: "black",
-            borderColor: "black",
-            width: "70%"
-          }}
-        >
-          <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "10px" }} />
-          すぐに料理を見る
-        </Button>
-      </Box>
+          sx={{ 
+            display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2
+          }}>
+          <Button variant="outlined" color="error" onClick={handleNavigateToFilter}
+            sx={{
+              color: "black",
+              borderColor: "black",
+              pl:2
+            }}
+          >
+            <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "1px"}} />
+              条件を絞ってから料理を見る
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleNavigateToMeals}
+            sx={{
+              color: "black",
+              borderColor: "black",
+              pl:2
+            }}
+          >
+            <ArrowForwardIosIcon sx={{ fontSize: "small", position: "absolute", left: "1px" }} />
+            すぐに料理を見る
+          </Button>
+        </Box>
+
       </>
       )}
     </Box>
